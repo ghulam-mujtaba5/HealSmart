@@ -3,10 +3,12 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useAppStyles } from '../ui/styles';
 import Button from '../ui/components/Button';
+import { useFeedback } from '../ui/feedback/useFeedback';
 import Skeleton from '../ui/components/Skeleton';
 
 export default function UploadPrescriptionScreen() {
   const { palette, common } = useAppStyles();
+  const { toast } = useFeedback();
   const [loading, setLoading] = React.useState(false);
   const [items, setItems] = React.useState<string[]>([]);
 
@@ -17,6 +19,7 @@ export default function UploadPrescriptionScreen() {
     setTimeout(() => {
       setItems(['Paracetamol 500mg', 'Ibuprofen 200mg']);
       setLoading(false);
+      toast('Detected 2 medicines');
     }, 1200);
   };
 
@@ -53,7 +56,7 @@ export default function UploadPrescriptionScreen() {
               <Pressable
                 android_ripple={{ color: '#e2e8f0' }}
                 style={[s.addBtn, { backgroundColor: palette.primary }]}
-                onPress={() => {}}
+                onPress={() => toast('Added to list')}
               >
                 <Text style={{ color: '#fff', fontWeight: '600' }}>Add</Text>
               </Pressable>

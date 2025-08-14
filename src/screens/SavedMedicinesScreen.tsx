@@ -1,15 +1,16 @@
 import React from 'react';
-import { View, Text, FlatList, Pressable, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Pressable, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation';
 import { useAppStyles } from '../ui/styles';
+import { useFeedback } from '../ui/feedback/useFeedback';
 import Skeleton from '../ui/components/Skeleton';
 import EmptyState from '../ui/components/EmptyState';
 import Tag from '../ui/components/Tag';
 
-const saved = [
+const initialSaved = [
   { id: 's1', name: 'Paracetamol 500mg', note: 'For headaches', time: '2 days ago' },
   { id: 's2', name: 'Ibuprofen 200mg', note: 'Post workout', time: '1 week ago' },
   { id: 's3', name: 'Cetirizine 10mg', note: 'Allergy season', time: '3 weeks ago' },
@@ -18,16 +19,33 @@ const saved = [
 export default function SavedMedicinesScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { palette } = useAppStyles();
+  const { toast } = useFeedback();
   const [loading, setLoading] = React.useState(true);
+  const [items, setItems] = React.useState(initialSaved);
   React.useEffect(() => {
     const t = setTimeout(() => setLoading(false), 900);
     return () => clearTimeout(t);
   }, []);
 
+  const removeItem = (id: string) => {
+    Alert.alert('Remove bookmark', 'Do you want to remove this medicine?', [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Remove', style: 'destructive', onPress: () => {
+        setItems(prev => prev.filter(i => i.id !== id));
+        toast('Removed from saved');
+      } },
+    ]);
+  };
+
+  const shareItem = (name: string) => {
+    Alert.alert('Share', `Share ${name} (coming soon)`);
+    toast('Share options coming soon');
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: palette.background }}>
       <FlatList
-        data={loading ? [] : saved}
+        data={loading ? [] : items}
         keyExtractor={(i) => i.id}
         contentContainerStyle={{ padding: 16, paddingBottom: 28 }}
         ListHeaderComponent={
@@ -58,7 +76,7 @@ export default function SavedMedicinesScreen() {
             onPress={() => navigation.navigate('MedicineDetail', { name: item.name })}
           >
             <View style={s.rowLeft}>
-              <View style={[s.pillIconWrap, { backgroundColor: palette.muted }]}>
+              <View style={[s.pillIconWrap, { backgroundColor: palette.muted }]}> 
                 <Icon name="pill" size={22} color={palette.primary} />
               </View>
               <View>
@@ -71,8 +89,24 @@ export default function SavedMedicinesScreen() {
                 )}
               </View>
             </View>
-            <View style={[s.openBtn, { backgroundColor: palette.primary }]}> 
-              <Text style={s.openBtnLabel}>Open</Text>
+            <View style={s.actionsRight}>
+              <Pressable
+                android_ripple={{ color: '#e2e8f0' }}
+                style={s.iconBtn}
+                onPress={() => shareItem(item.name)}
+              >
+                <Icon name="share-variant" size={20} color={palette.mutedText} />
+              </Pressable>
+              <Pressable
+                android_ripple={{ color: '#e2e8f0' }}
+                style={s.iconBtn}
+                onPress={() => removeItem(item.id)}
+              >
+                <Icon name="bookmark-remove" size={20} color={palette.mutedText} />
+              </Pressable>
+              <View style={[s.openBtn, { backgroundColor: palette.primary }]}> 
+                <Text style={s.openBtnLabel}>Open</Text>
+              </View>
             </View>
           </Pressable>
         )}
@@ -111,6 +145,8 @@ const s = StyleSheet.create({
   },
   rowTitle: { fontSize: 16, fontWeight: '600' },
   rowSub: { fontSize: 12, color: '#64748b' },
+  actionsRight: { flexDirection: 'row', alignItems: 'center' },
+  iconBtn: { paddingHorizontal: 6, paddingVertical: 6, borderRadius: 8, marginRight: 6 },
   openBtn: { borderRadius: 10, paddingHorizontal: 12, paddingVertical: 6 },
   openBtnLabel: { color: '#fff', fontWeight: '600' },
 });
