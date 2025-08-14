@@ -27,6 +27,29 @@ export default function SavedMedicinesScreen() {
     return () => clearTimeout(t);
   }, []);
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable
+          android_ripple={{ color: '#e2e8f0' }}
+          onPress={() => {
+            if (items.length === 0) {
+              toast('Nothing to clear');
+              return;
+            }
+            Alert.alert('Clear all saved?', 'This will remove all saved medicines.', [
+              { text: 'Cancel', style: 'cancel' },
+              { text: 'Clear all', style: 'destructive', onPress: () => { setItems([]); toast('Cleared all saved'); } },
+            ]);
+          }}
+          style={{ paddingHorizontal: 8, paddingVertical: 6, borderRadius: 8 }}
+        >
+          <Text style={{ color: palette.primary, fontWeight: '600' }}>Clear</Text>
+        </Pressable>
+      ),
+    });
+  }, [navigation, items.length, palette.primary, toast]);
+
   const removeItem = (id: string) => {
     Alert.alert('Remove bookmark', 'Do you want to remove this medicine?', [
       { text: 'Cancel', style: 'cancel' },
@@ -79,9 +102,9 @@ export default function SavedMedicinesScreen() {
               <View style={[s.pillIconWrap, { backgroundColor: palette.muted }]}> 
                 <Icon name="pill" size={22} color={palette.primary} />
               </View>
-              <View>
-                <Text style={[s.rowTitle, { color: palette.text }]}>{item.name}</Text>
-                <Text style={[s.rowSub, { color: palette.mutedText }]}>{item.note} • {item.time}</Text>
+              <View style={s.rowText}>
+                <Text style={[s.rowTitle, { color: palette.text }]} numberOfLines={2}>{item.name}</Text>
+                <Text style={[s.rowSub, { color: palette.mutedText }]} numberOfLines={1}>{item.note} • {item.time}</Text>
                 {index % 2 === 0 ? (
                   <Tag label="Reminder Set" tone="info" style={{ marginTop: 6, alignSelf: 'flex-start' }} />
                 ) : (
@@ -134,7 +157,7 @@ const s = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
   },
-  rowLeft: { flexDirection: 'row', alignItems: 'center' },
+  rowLeft: { flexDirection: 'row', alignItems: 'center', flex: 1 },
   pillIconWrap: {
     height: 40,
     width: 40,
@@ -143,10 +166,11 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     marginRight: 12,
   },
-  rowTitle: { fontSize: 16, fontWeight: '600' },
-  rowSub: { fontSize: 12, color: '#64748b' },
-  actionsRight: { flexDirection: 'row', alignItems: 'center' },
-  iconBtn: { paddingHorizontal: 6, paddingVertical: 6, borderRadius: 8, marginRight: 6 },
+  rowText: { flex: 1, minWidth: 0 },
+  rowTitle: { fontSize: 16, fontWeight: '600', flexShrink: 1 },
+  rowSub: { fontSize: 12, color: '#64748b', marginTop: 2 },
+  actionsRight: { flexDirection: 'row', alignItems: 'center', marginLeft: 10 },
+  iconBtn: { height: 36, width: 36, borderRadius: 10, alignItems: 'center', justifyContent: 'center', marginRight: 8 },
   openBtn: { borderRadius: 10, paddingHorizontal: 12, paddingVertical: 6 },
   openBtnLabel: { color: '#fff', fontWeight: '600' },
 });

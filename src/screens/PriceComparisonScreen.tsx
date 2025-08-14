@@ -5,6 +5,7 @@ import type { RootStackParamList } from '../navigation';
 import { pharmacies } from '../data/dummy';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useAppStyles } from '../ui/styles';
+import { useFeedback } from '../ui/feedback/useFeedback';
 import Skeleton from '../ui/components/Skeleton';
 import EmptyState from '../ui/components/EmptyState';
 import Tag from '../ui/components/Tag';
@@ -17,6 +18,7 @@ export default function PriceComparisonScreen({ route }: Props) {
   const [loading, setLoading] = useState(true);
   const name = route.params?.name ?? 'Paracetamol 500mg';
   const { palette } = useAppStyles();
+  const { toast } = useFeedback();
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 900);
@@ -58,7 +60,7 @@ export default function PriceComparisonScreen({ route }: Props) {
 
       <View style={s.actionsRow}>
         <Pressable
-          onPress={() => setSortAsc(s => !s)}
+          onPress={() => { setSortAsc(s => !s); toast('Sorting updated'); }}
           android_ripple={{ color: '#e2e8f0' }}
           style={[s.actionBtn, { backgroundColor: palette.surface }]}
         >
@@ -67,7 +69,11 @@ export default function PriceComparisonScreen({ route }: Props) {
             <Text style={{ color: palette.text, marginLeft: 6 }}>Sort: {sortAsc ? 'Low → High' : 'High → Low'}</Text>
           </View>
         </Pressable>
-        <Pressable android_ripple={{ color: '#e2e8f0' }} style={[s.actionBtn, { backgroundColor: palette.surface }]}> 
+        <Pressable
+          android_ripple={{ color: '#e2e8f0' }}
+          style={[s.actionBtn, { backgroundColor: palette.surface }]}
+          onPress={() => toast('Filter options coming soon')}
+        > 
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Icon name="filter-variant" size={18} color={palette.text} />
             <Text style={{ color: palette.text, marginLeft: 6 }}>Filter</Text>
