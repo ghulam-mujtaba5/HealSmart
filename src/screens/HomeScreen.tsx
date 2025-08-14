@@ -49,7 +49,7 @@ export default function HomeScreen() {
       <View style={[s.searchBar, { backgroundColor: palette.muted }]}> 
         <Icon name="magnify" size={20} color={palette.mutedText} />
         <TextInput
-          style={s.searchInput}
+          style={[s.searchInput, { color: palette.text }]}
           placeholder="Search medicine name"
           placeholderTextColor={palette.mutedText}
           value={query}
@@ -64,11 +64,15 @@ export default function HomeScreen() {
 
       <View style={s.tileRow}>
         <Tile icon="camera" label="Scan Medicine" onPress={() => navigation.navigate('Scan')} />
-        <Tile icon="file-upload" label="Upload Prescription" onPress={() => {}} />
+        <Tile icon="file-upload" label="Upload Prescription" onPress={() => navigation.navigate('UploadPrescription')} />
       </View>
       <View style={s.tileRow}>
         <Tile icon="sync" label="Find Alternatives" onPress={() => navigation.navigate('Alternatives')} />
         <Tile icon="cash-multiple" label="Price Comparison" onPress={() => navigation.navigate('PriceComparison')} />
+      </View>
+      <View style={s.tileRow}>
+        <Tile icon="bell" label="Reminders" onPress={() => navigation.navigate('Reminders')} />
+        <Tile icon="clipboard-list" label="Inventory" onPress={() => navigation.navigate('Inventory')} />
       </View>
 
       <Text style={[s.sectionTitle, { color: palette.text }]}>Recent Searches</Text>
@@ -129,7 +133,6 @@ const s = StyleSheet.create({
     flex: 1,
     paddingVertical: 12,
     marginLeft: 8,
-    color: '#0f172a',
   },
   searchAction: {
     paddingVertical: 12,

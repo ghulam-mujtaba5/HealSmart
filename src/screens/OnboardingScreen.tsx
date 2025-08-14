@@ -46,7 +46,7 @@ export default function OnboardingScreen({ navigation }: Props) {
         renderItem={({ item }) => (
           <View style={[s.slide, { width }]}>
             <View style={[s.illustration, { backgroundColor: palette.muted }]}>
-              <Icon name={item.icon} size={72} color="#2563eb" />
+              <Icon name={item.icon} size={72} color={palette.primary} />
             </View>
             <Text style={[s.title, { color: palette.text }]}>{item.title}</Text>
             <Text style={[s.desc, { color: palette.mutedText }]}>{item.desc}</Text>
@@ -61,7 +61,9 @@ export default function OnboardingScreen({ navigation }: Props) {
               key={i}
               style={[
                 s.dot,
-                i === index ? { width: 24, backgroundColor: palette.primary ?? '#16a34a' } : { width: 8, backgroundColor: '#cbd5e1' },
+                i === index
+                  ? { width: 24, backgroundColor: palette.primary }
+                  : { width: 8, backgroundColor: palette.muted },
               ]}
             />
           ))}

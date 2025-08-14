@@ -38,12 +38,12 @@ export default function AlternativesScreen({ route, navigation }: Props) {
               <View key={a.id} style={[common.card, { backgroundColor: palette.surface, marginBottom: 8 }]}>
                 <Text style={{ color: palette.text, fontWeight: '600' }}>{a.name}</Text>
                 <Text style={{ color: palette.mutedText }}>{a.manufacturer}</Text>
-                <View style={[common.row, common.between, { marginTop: 8 }]}>
+                <View style={[common.row, common.between, { marginTop: 8 }] }>
                   <Text style={{ color: palette.primary }}>{a.price}</Text>
                   <Pressable
                     onPress={() => navigation.navigate('PriceComparison', { name: a.name })}
                     android_ripple={{ color: '#e2e8f0' }}
-                    style={[s.cta]}
+                    style={[s.cta, { backgroundColor: palette.primary }]}
                   >
                     <Text style={s.ctaLabel}>View Price Comparison</Text>
                   </Pressable>
@@ -65,7 +65,6 @@ const s = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 12,
-    backgroundColor: '#2563eb',
   },
   ctaLabel: {
     color: '#fff',

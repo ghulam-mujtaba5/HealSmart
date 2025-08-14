@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable, View, Alert } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,6 +16,9 @@ import PriceComparisonScreen from '../screens/PriceComparisonScreen';
 import MedicineDetailScreen from '../screens/MedicineDetailScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SavedMedicinesScreen from '../screens/SavedMedicinesScreen';
+import UploadPrescriptionScreen from '../screens/UploadPrescriptionScreen';
+import RemindersScreen from '../screens/RemindersScreen';
+import InventoryScreen from '../screens/InventoryScreen';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -26,6 +29,9 @@ export type RootStackParamList = {
   Alternatives: { name: string } | undefined;
   PriceComparison: { name: string } | undefined;
   MedicineDetail: { name: string } | undefined;
+  UploadPrescription: undefined;
+  Reminders: undefined;
+  Inventory: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -81,9 +87,17 @@ function MainTabs() {
 }
 
 export default function NavigationRoot() {
+  const { palette } = useAppStyles();
   return (
     <ThemedContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: palette.surface },
+          headerTintColor: palette.text,
+          headerShadowVisible: false,
+          contentStyle: { backgroundColor: palette.background },
+        }}
+      >
         <Stack.Screen
           name="Splash"
           component={SplashScreen}
@@ -113,7 +127,11 @@ export default function NavigationRoot() {
             return {
               title: 'Alternatives',
               headerRight: () => (
-                <Pressable android_ripple={{ color: '#e2e8f0' }} onPress={() => {}} style={{ paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8 }}>
+                <Pressable
+                  android_ripple={{ color: '#e2e8f0' }}
+                  onPress={() => Alert.alert('Filter', 'Filter options coming soon')}
+                  style={{ paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8 }}
+                >
                   <Icon name="filter-variant" size={22} color={palette.text} />
                 </Pressable>
               ),
@@ -129,10 +147,18 @@ export default function NavigationRoot() {
               title: 'Price Comparison',
               headerRight: () => (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Pressable android_ripple={{ color: '#e2e8f0' }} onPress={() => {}} style={{ paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8, marginRight: 6 }}>
+                  <Pressable
+                    android_ripple={{ color: '#e2e8f0' }}
+                    onPress={() => Alert.alert('Filter', 'Filter options coming soon')}
+                    style={{ paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8, marginRight: 6 }}
+                  >
                     <Icon name="filter-variant" size={22} color={palette.text} />
                   </Pressable>
-                  <Pressable android_ripple={{ color: '#e2e8f0' }} onPress={() => {}} style={{ paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8 }}>
+                  <Pressable
+                    android_ripple={{ color: '#e2e8f0' }}
+                    onPress={() => Alert.alert('Sort', 'Sorting options coming soon')}
+                    style={{ paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8 }}
+                  >
                     <Icon name="sort" size={22} color={palette.text} />
                   </Pressable>
                 </View>
@@ -149,16 +175,39 @@ export default function NavigationRoot() {
               title: 'Medicine Details',
               headerRight: () => (
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Pressable android_ripple={{ color: '#e2e8f0' }} onPress={() => {}} style={{ paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8, marginRight: 6 }}>
+                  <Pressable
+                    android_ripple={{ color: '#e2e8f0' }}
+                    onPress={() => Alert.alert('Saved', 'Added to bookmarks')}
+                    style={{ paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8, marginRight: 6 }}
+                  >
                     <Icon name="bookmark-plus" size={22} color={palette.text} />
                   </Pressable>
-                  <Pressable android_ripple={{ color: '#e2e8f0' }} onPress={() => {}} style={{ paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8 }}>
+                  <Pressable
+                    android_ripple={{ color: '#e2e8f0' }}
+                    onPress={() => Alert.alert('Share', 'Share options coming soon')}
+                    style={{ paddingHorizontal: 6, paddingVertical: 4, borderRadius: 8 }}
+                  >
                     <Icon name="share-variant" size={22} color={palette.text} />
                   </Pressable>
                 </View>
               ),
             };
           }}
+        />
+        <Stack.Screen
+          name="UploadPrescription"
+          component={UploadPrescriptionScreen}
+          options={{ title: 'Upload Prescription' }}
+        />
+        <Stack.Screen
+          name="Reminders"
+          component={RemindersScreen}
+          options={{ title: 'Reminders' }}
+        />
+        <Stack.Screen
+          name="Inventory"
+          component={InventoryScreen}
+          options={{ title: 'Inventory' }}
         />
       </Stack.Navigator>
     </ThemedContainer>

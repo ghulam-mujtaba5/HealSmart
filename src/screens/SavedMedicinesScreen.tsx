@@ -111,6 +111,6 @@ const s = StyleSheet.create({
   },
   rowTitle: { fontSize: 16, fontWeight: '600' },
   rowSub: { fontSize: 12, color: '#64748b' },
-  openBtn: { backgroundColor: '#2563eb', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 6 },
+  openBtn: { borderRadius: 10, paddingHorizontal: 12, paddingVertical: 6 },
   openBtnLabel: { color: '#fff', fontWeight: '600' },
 });

@@ -5,7 +5,7 @@ HealSmart is a cross-platform mobile app designed to help you manage your medici
 
 ---
 
-## � Preview
+## 🖼️ Preview
 | Home Screen | Medicine Details | Alternatives |
 |:-----------:|:---------------:|:------------:|
 | ![Home](assets/images/home.jpg) | ![Medicine Details](assets/images/medicine-details.jpg) | ![Alternatives](assets/images/alternatives.jpg) |
@@ -23,7 +23,7 @@ HealSmart is a cross-platform mobile app designed to help you manage your medici
 
 ---
 
-## � Project Structure
+## 📁 Project Structure
 
 ```
 HealSmart/
@@ -51,24 +51,31 @@ HealSmart/
    ```
 2. **Start Metro Bundler**
    ```sh
-   npx react-native start
+   npm run start
    ```
 3. **Run on Android**
    ```sh
-   npx react-native run-android
+   npm run android
    ```
 4. **Run on iOS**
    ```sh
-   npx react-native run-ios
+   npm run ios
+   ```
+5. **Type Check (optional)**
+   ```sh
+   npm run typecheck
+   ```
+6. **Format (optional)**
+   ```sh
+   npm run format
    ```
 
 ---
 
-## � License
+## 📝 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ---
-
 
 ## 👨‍💻 Author
 
