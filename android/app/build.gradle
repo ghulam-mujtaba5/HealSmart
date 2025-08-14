@@ -105,6 +105,8 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+
+    
 }
 
 dependencies {
@@ -117,3 +119,5 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+// Vector icon fonts are provided via assets (react-native-asset). Do not apply fonts.gradle to avoid duplicates.
