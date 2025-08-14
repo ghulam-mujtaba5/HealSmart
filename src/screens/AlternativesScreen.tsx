@@ -4,11 +4,13 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation';
 import { alternatives } from '../data/dummy';
 import { useAppStyles } from '../ui/styles';
+import { useFeedback } from '../ui/feedback/useFeedback';
 
  type Props = NativeStackScreenProps<RootStackParamList, 'Alternatives'>;
 
 export default function AlternativesScreen({ route, navigation }: Props) {
   const { common, styles, palette } = useAppStyles();
+  const { toast } = useFeedback();
   const targetName = route.params?.name ?? 'Paracetamol 500mg';
 
   const sections = [
@@ -41,7 +43,7 @@ export default function AlternativesScreen({ route, navigation }: Props) {
                 <View style={[common.row, common.between, { marginTop: 8 }] }>
                   <Text style={{ color: palette.primary }}>{a.price}</Text>
                   <Pressable
-                    onPress={() => navigation.navigate('PriceComparison', { name: a.name })}
+                    onPress={() => { toast('Opening price comparison'); navigation.navigate('PriceComparison', { name: a.name }); }}
                     android_ripple={{ color: '#e2e8f0' }}
                     style={[s.cta, { backgroundColor: palette.primary }]}
                   >
